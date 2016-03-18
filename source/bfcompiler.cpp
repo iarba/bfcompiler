@@ -11,16 +11,16 @@ int checkbrackets(char *f)
   {
     if(c=='[')
     {
-	  b++;
+      b++;
     }
     if(c==']')
     {
-	  b--;
+      b--;
     }
     if(b < 0) 
     {
-	  return b;
-	}
+      return b;
+    }
   }
   return b;
 }
@@ -28,13 +28,13 @@ int main(int argc, char *argv[])
 {
   if(argc != 2)
   {
-	cout<<"Please use with 1 file\n";
-	return 0;
+    cout<<"Please use with 1 file\n";
+    return 0;
   }
   if(checkbrackets(argv[1]))
   {
-	cout<<"Source has bracketing problems\n";
-	return 0;
+    cout<<"Source has bracketing problems\n";
+    return 0;
   }
   ifstream s(argv[1], std::ifstream::in);
   freopen("brainfuck.c", "w", stdout);
