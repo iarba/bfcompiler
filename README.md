@@ -7,10 +7,10 @@ Call bfcompiler.sh using 1 or 2 arguments. The first argument should be the brai
 
 ## Command:
 ```
-./bfcompiler /path/to/source [path/to/result]
+./bfcompiler.sh /path/to/source [path/to/result]
 ```
 
 ## Example:
 ```
-./bfcompiler source.bf result
+./bfcompiler.sh source.bf result
 ```
