@@ -1,7 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <cstdio>
+
 using namespace std;
+
+int pstl = 0; // printed something this line
+
 int checkbrackets(char *f)
 {
   int b = 0;
@@ -22,19 +26,30 @@ int checkbrackets(char *f)
       return b;
     }
   }
+  s.close();
   return b;
 }
+
+void do_print_nl()
+{
+  if(pstl)
+  {
+    printf("\n");
+  }
+  pstl = -1;
+}
+
 int main(int argc, char *argv[])
 {
   if(argc != 2)
   {
     cout<<"Please use with 1 file\n";
-    return 0;
+    return 1;
   }
   if(checkbrackets(argv[1]))
   {
     cout<<"Source has bracketing problems\n";
-    return 0;
+    return 1;
   }
   ifstream s(argv[1], std::ifstream::in);
   freopen("brainfuck.c", "w", stdout);
@@ -43,44 +58,44 @@ int main(int argc, char *argv[])
   printf("int main()\n");
   printf("{\n");
   char c;
+  pstl = 0;
   while (s >> c)
   {
-    if(c == '>')
-    {
-      printf("p++;");
+    switch(c){
+      case '>':
+        printf("p++;");
+        break;
+      case '<':
+        printf("p--;");
+        break;
+      case '+':
+        printf("a[p]++;");
+        break;
+      case '-':
+        printf("a[p]--;");
+        break;
+      case '[':
+        do_print_nl();
+        printf("while(a[p])\n");
+        printf("{\n");
+        break;
+      case ']':
+        do_print_nl();
+        printf("}\n");
+        break;
+      case ',':
+        printf("a[p]=getchar();");
+        break;
+      case '.':
+        printf("putchar(a[p]);");
+        break;
+      case '\n':
+        do_print_nl();
+        break;
     }
-    if(c == '<')
-    {
-      printf("p--;");
-    }
-    if(c == '+')
-    {
-      printf("a[p]++;");
-    }
-    if(c == '-')
-    {
-      printf("a[p]--;");
-    }
-    if(c == '[')
-    {
-      printf("while(a[p])");
-      printf("{");
-    }
-    if(c == ']')
-    {
-      printf("}");
-    }
-    if(c == ',')
-    {
-      printf("a[p]=getchar();");
-    }
-    if(c == '.')
-    {
-      printf("putchar(a[p]);");
-    }
-    printf("\n");
   }
   printf("return 0;\n");
   printf("}\n");
+  s.close();
   return 0;
 }
