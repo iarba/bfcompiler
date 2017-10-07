@@ -4,8 +4,6 @@
 
 using namespace std;
 
-int pstl = 0; // printed something this line
-
 int checkbrackets(char *f)
 {
   int b = 0;
@@ -30,20 +28,11 @@ int checkbrackets(char *f)
   return b;
 }
 
-void do_print_nl()
-{
-  if(pstl)
-  {
-    printf("\n");
-  }
-  pstl = -1;
-}
-
 int main(int argc, char *argv[])
 {
-  if(argc != 2)
+  if(argc != 3)
   {
-    cout<<"Please use with 1 file\n";
+    cout<<"Improper use";
     return 1;
   }
   if(checkbrackets(argv[1]))
@@ -52,49 +41,43 @@ int main(int argc, char *argv[])
     return 1;
   }
   ifstream s(argv[1], std::ifstream::in);
-  freopen("brainfuck.c", "w", stdout);
-  printf("char a[65536];\n");
-  printf("int p=0;\n");
-  printf("int main()\n");
-  printf("{\n");
+  freopen(argv[2], "w", stdout);
+  printf("#include \"memlib.c\"\n");
+  printf("#include <stdio.h>\n");
+  printf("int main()");
+  printf("{MEM_T *p=new_node(),*eraser=p;");
   char c;
-  pstl = 0;
   while (s >> c)
   {
     switch(c){
       case '>':
-        printf("p++;");
+        printf("p=next(p);");
         break;
       case '<':
-        printf("p--;");
+        printf("p=prev(p);");
         break;
       case '+':
-        printf("a[p]++;");
+        printf("(*get(p))++;");
         break;
       case '-':
-        printf("a[p]--;");
+        printf("(*get(p))--;");
         break;
       case '[':
-        do_print_nl();
-        printf("while(a[p])\n");
-        printf("{\n");
+        printf("while(*get(p)){");
         break;
       case ']':
-        do_print_nl();
-        printf("}\n");
+        printf("}");
         break;
       case ',':
-        printf("a[p]=getchar();");
+        printf("fread(get(p),MEM_V_SIZE,1,stdin);");
         break;
       case '.':
-        printf("putchar(a[p]);");
-        break;
-      case '\n':
-        do_print_nl();
+        printf("fwrite(get(p),MEM_V_SIZE,1,stdout);");
         break;
     }
   }
-  printf("return 0;\n");
+  printf("erase(eraser);");
+  printf("return 0;");
   printf("}\n");
   s.close();
   return 0;

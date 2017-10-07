@@ -1,6 +1,8 @@
 # gedit backup files
 *~
-# the ELF obtained after running make
-toc
+# hidden files
+.*
+# binaries
+bin/
 # the default program name obtained after running the compiler
 runbf

@@ -1,9 +1,28 @@
-HEADERS = program.h headers.h
+SRCDIR = source
+BINDIR = bin
+CC     = gcc
+MAGICS = brainfuck_as.c
+DEST   = runbf
+SRC    = /dev/null
 
-all: toc
+.phony: all
+all: build
 
-toc: source/bfcompiler.cpp
-	g++ source/bfcompiler.cpp -o toc
+.phony: build
+build: $(BINDIR) $(BINDIR)/bf_to_c
 
+$(BINDIR):
+	mkdir $@
+
+$(BINDIR)/bf_to_c: source/bfcompiler.cpp
+	g++ source/bfcompiler.cpp -o $@
+
+.phony: run
+run: build
+	$(BINDIR)/bf_to_c $(SRC) $(MAGICS)
+	$(CC) $(MAGICS) -o $(DEST)
+	rm -rf $(MAGICS)
+
+.phony: clean
 clean:
-	rm toc
+	rm -rf $(BINDIR)
