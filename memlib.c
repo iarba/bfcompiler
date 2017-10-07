@@ -8,7 +8,8 @@ MEM_T
 {
   MEM_T *prev;
   MEM_T *next;
-  VAL_T values[1];
+  uint8_t index;
+  VAL_T values[256];
 };
 
 MEM_T *new_node()
@@ -18,6 +19,11 @@ MEM_T *new_node()
 
 MEM_T *next(MEM_T *this)
 {
+  if(this -> index != 255)
+  {
+    this -> index++;
+    return this;
+  }
   if(!(this -> next))
   {
     this -> next = new_node();
@@ -28,9 +34,15 @@ MEM_T *next(MEM_T *this)
 
 MEM_T *prev(MEM_T *this)
 {
+  if(this -> index != 0)
+  {
+    this -> index--;
+    return this;
+  }
   if(!(this -> prev))
   {
     this -> prev = new_node();
+    this -> prev -> index = 255;
     this -> prev -> next = this;
   }
   return this -> prev;
