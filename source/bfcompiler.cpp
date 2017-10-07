@@ -32,12 +32,12 @@ int main(int argc, char *argv[])
 {
   if(argc != 3)
   {
-    cout<<"Improper use";
+    cerr<<"Improper use";
     return 1;
   }
   if(checkbrackets(argv[1]))
   {
-    cout<<"Source has bracketing problems\n";
+    cerr<<"Source has bracketing problems\n";
     return 1;
   }
   ifstream s(argv[1], std::ifstream::in);
