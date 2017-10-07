@@ -50,7 +50,7 @@ MEM_T *prev(MEM_T *this)
 
 VAL_T *get(MEM_T *this)
 {
-  return this -> values;
+  return this -> values + this -> index;
 }
 
 void erase(MEM_T *this)
