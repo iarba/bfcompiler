@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
   }
   ifstream s(argv[1], std::ifstream::in);
   freopen(argv[2], "w", stdout);
-  printf("#include \"memlib.c\"\n");
+  printf("#include \"lib/memlib.c\"\n");
   printf("#include <stdio.h>\n");
   printf("int main()");
   printf("{MEM_T *p=new_node(),*eraser=p;");
